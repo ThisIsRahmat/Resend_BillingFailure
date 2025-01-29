@@ -102,14 +102,16 @@ Create a `app/api/send/route.ts`and import the billing failure email you previou
 ```
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
-import BillingFailure from '../../../components/email/BillingFailure';
+import BillingFailure from '../../components/email/BillingFailure';  
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
   try {
+    
     const { name, amount, invoiceId, dueDate, paymentLink, toEmail } = await request.json();
 
+    
     if (!name || !amount || !invoiceId || !dueDate || !paymentLink || !toEmail) {
       return NextResponse.json(
         { error: 'Missing required fields' },
@@ -118,7 +120,7 @@ export async function POST(request: Request) {
     }
 
     const data = await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev',
+      from: 'Billing Failure Challenge <hello@example.com>',
       to: [toEmail],
       subject: `Payment Failed - Invoice #${invoiceId}`,
       react: BillingFailure({

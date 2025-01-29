@@ -1,16 +1,15 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
-import BillingFailure from '../../components/email/BillingFailure';  // Updated path
+import BillingFailure from '../../components/email/BillingFailure';  
 
-// Initialize Resend with API key
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
   try {
-    // Parse the request body
+    
     const { name, amount, invoiceId, dueDate, paymentLink, toEmail } = await request.json();
 
-    // Validate required fields
+    
     if (!name || !amount || !invoiceId || !dueDate || !paymentLink || !toEmail) {
       return NextResponse.json(
         { error: 'Missing required fields' },
@@ -19,7 +18,7 @@ export async function POST(request: Request) {
     }
 
     const data = await resend.emails.send({
-      from: 'Billing Failure Email Resend Challenge <billing@thisisrahmat.com>',
+      from: 'Billing Failure Challenge <hello@example.com>',
       to: [toEmail],
       subject: `Payment Failed - Invoice #${invoiceId}`,
       react: BillingFailure({
