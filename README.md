@@ -31,7 +31,7 @@ echo "RESEND_API_KEY=your_api_key_here" > .env
 
 ### 1. Create the Email Template
 
-Create a BillingFailure component to send billing failure emails to customers in `components/email/BillingFailure.tsx`:
+Create a BillingFailure component specifically for billing failure emails in  `components/email/BillingFailure.tsx`:
 
 ```
 import {
@@ -97,7 +97,7 @@ export default BillingFailure;
 
 ### 2. Create the API Route
 
-Create `app/api/send/route.ts`:
+Create a `app/api/send/route.ts`and import the billing failure email you previously created and use the Resend SDK to send it:
 
 ```
 import { NextResponse } from 'next/server';
